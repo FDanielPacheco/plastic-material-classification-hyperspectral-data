@@ -26,8 +26,10 @@ num_replicates = 0
 
 sample_ranges = []
 
-for i in range(5553):
-    if sample_code[i] != "White_reference " and sample_code[i] != "Water_16_sediment":
+calibrationSamples = [ "White_reference ", "Water_16_sediment", "Wood_d_NA_NA_PoA_field", "Clear water" , "Water_1500_algae", "Water_3000_algae", "Water_4_sediment", "Black_cloth_calibrationFacility"]
+
+for i in range(len(sample_code)):
+    if sample_code[i] not in calibrationSamples:
         if(replicate[i] == 1):
             data_mean = data[:, i]
             sample_range_init = i

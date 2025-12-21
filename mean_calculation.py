@@ -18,15 +18,19 @@ wavelengths = df.iloc[0:, 0].astype(float).values
 
 sample_code = df_meta.iloc[0:, 0].astype(str).values
 replicate = df_meta.iloc[0:, 16].astype(int).values
+plastic_names_first_column = df_meta.iloc[0:, 3]
+plastic_names_second_column = df_meta.iloc[0:, 4]
+plastic_names_fourth_column = df_meta.iloc[0:, 6]
 
 data_sample_codes = []
+data_plastic_name = []
 new_data = []
 data_mean = 0
 num_replicates = 0
 
 sample_ranges = []
 
-calibrationSamples = [ "White_reference ", "Water_16_sediment", "Wood_d_NA_NA_PoA_field", "Clear water" , "Water_1500_algae", "Water_3000_algae", "Water_4_sediment", "Black_cloth_calibrationFacility"]
+calibrationSamples = [ "White_reference ", "Water_16_sediment", "Wood_d_NA_NA_PoA_field", "Clear water" , "Water_1500_algae", "Water_3000_algae", "Water_4_sediment", "Black_cloth_calibrationFacility", "Backgound_lid", "JumboBag_d_NA_NA_shop_pristine", "CrushedJumboBag_d_NA_NA_shop_pristine"]
 
 for i in range(len(sample_code)):
     if sample_code[i] not in calibrationSamples:
@@ -43,6 +47,16 @@ for i in range(len(sample_code)):
             new_data.append(data_mean)
             data_sample_codes.append(sample_code[i])
             sample_ranges.append((sample_range))
+            if plastic_names_first_column[i] == "ND":
+                if plastic_names_second_column[i] == "ND":
+                    if plastic_names_fourth_column[i] == "ND":
+                        data_plastic_name.append("ND")
+                    else:
+                        data_plastic_name.append(plastic_names_fourth_column[i])
+                else:
+                    data_plastic_name.append(plastic_names_second_column[i])
+            else:
+                data_plastic_name.append(plastic_names_first_column[i])
 
 
 
@@ -71,6 +85,7 @@ df_export = pd.DataFrame(
 
 # Insert sample ranges as first column
 df_export.insert(0, "Sample_Range", sample_ranges)
+df_export.insert(0, "Plastic", data_plastic_name)
 
 df_export.to_csv("New_data.csv")
 

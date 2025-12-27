@@ -205,3 +205,12 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Additional files that should not be included in the repository
+*.csv 
+*.xlsx
+*.txt
+*.data
+
+docs/
+data/

@@ -214,3 +214,6 @@ __marimo__/
 
 docs/
 data/
+results/
+sklearn-mrmr/
+scripts/sklearn_mrmr
